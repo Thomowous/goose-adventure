@@ -35,7 +35,7 @@ pub fn sound_effect(handle: Handle<AudioSource>) -> impl Bundle {
 
 /// [`GlobalVolume`] doesn't apply to already-running audio entities, so this system will update them.
 fn apply_global_volume(
-    global_volume: Res<GlobalVolume>,
+    global_volume: If<Res<GlobalVolume>>,
     mut audio_query: Query<(&PlaybackSettings, &mut AudioSink)>,
 ) {
     for (playback, mut sink) in &mut audio_query {

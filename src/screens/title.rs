@@ -9,10 +9,10 @@ pub(super) fn plugin(app: &mut App) {
     app.add_systems(OnExit(Screen::Title), close_menu);
 }
 
-fn open_main_menu(mut next_menu: ResMut<NextState<Menu>>) {
+fn open_main_menu(mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::Main);
 }
 
-fn close_menu(mut next_menu: ResMut<NextState<Menu>>) {
+fn close_menu(mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::None);
 }

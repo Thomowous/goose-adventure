@@ -119,7 +119,7 @@ fn handle_collisions(
     mut enemy_query: Query<(&Transform, &mut Enemy, Entity), (Without<Bullet>, Without<Boss>)>,
     mut boss_query: Query<(&Transform, &mut Boss, Entity), (Without<Bullet>, Without<Enemy>)>,
     mut bullet_query: Query<(&Transform, &mut Bullet, Entity), (Without<Enemy>, Without<Boss>)>,
-    mut curse_level: ResMut<CurseLevel>,
+    mut curse_level: If<ResMut<CurseLevel>>,
 ) {
     'bullet: for (bullet_transform, mut bullet, bullet_entity) in bullet_query {
         bullet.despawn_timer.tick(time.delta());

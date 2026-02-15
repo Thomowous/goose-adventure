@@ -31,8 +31,8 @@ fn spawn_main_menu(mut commands: Commands) {
 
 fn enter_loading_or_gameplay_screen(
     _: On<Pointer<Click>>,
-    resource_handles: Res<ResourceHandles>,
-    mut next_screen: ResMut<NextState<Screen>>,
+    resource_handles: If<Res<ResourceHandles>>,
+    mut next_screen: If<ResMut<NextState<Screen>>>,
 ) {
     if resource_handles.is_all_done() {
         next_screen.set(Screen::Gameplay);
@@ -41,11 +41,11 @@ fn enter_loading_or_gameplay_screen(
     }
 }
 
-fn open_settings_menu(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {
+fn open_settings_menu(_: On<Pointer<Click>>, mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::Settings);
 }
 
-fn open_credits_menu(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {
+fn open_credits_menu(_: On<Pointer<Click>>, mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::Credits);
 }
 

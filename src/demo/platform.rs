@@ -84,7 +84,7 @@ impl FromWorld for PlatformAssets {
 #[reflect(Component)]
 pub struct Platform;
 
-pub fn platform(location: Vec2, size: Vec2, platform_assets: &Res<PlatformAssets>) -> impl Bundle {
+pub fn platform(location: Vec2, size: Vec2, platform_assets: &If<Res<PlatformAssets>>) -> impl Bundle {
     let real_location = location * 64.0;
     let real_size = size * 32.0;
     (

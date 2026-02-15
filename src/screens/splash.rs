@@ -43,7 +43,7 @@ const SPLASH_BACKGROUND_COLOR: Color = Color::srgb(0.157, 0.157, 0.157);
 const SPLASH_DURATION_SECS: f32 = 1.8;
 const SPLASH_FADE_DURATION_SECS: f32 = 0.6;
 
-fn spawn_splash_screen(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn spawn_splash_screen(mut commands: Commands, asset_server: If<Res<AssetServer>>) {
     commands.spawn((
         widget::ui_root("Splash Screen"),
         BackgroundColor(SPLASH_BACKGROUND_COLOR),
@@ -130,12 +130,12 @@ fn tick_splash_timer(time: Res<Time>, mut timer: ResMut<SplashTimer>) {
     timer.0.tick(time.delta());
 }
 
-fn check_splash_timer(timer: ResMut<SplashTimer>, mut next_screen: ResMut<NextState<Screen>>) {
+fn check_splash_timer(timer: ResMut<SplashTimer>, mut next_screen: If<ResMut<NextState<Screen>>>) {
     if timer.0.just_finished() {
         next_screen.set(Screen::Title);
     }
 }
 
-fn enter_title_screen(mut next_screen: ResMut<NextState<Screen>>) {
+fn enter_title_screen(mut next_screen: If<ResMut<NextState<Screen>>>) {
     next_screen.set(Screen::Title);
 }

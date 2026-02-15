@@ -9,7 +9,7 @@ use crate::{
     asset_tracking::LoadResource,
     audio::music,
     demo::{
-        aabb::AABB, boss::{BossAssets, boss}, enemy::{EnemyAssets, mushroom}, events::LevelUpEvent, food::Food, gun::Gun, platform::{Grass, Platform, PlatformAssets, platform}, player::{Player, PlayerAssets, player}
+        aabb::AABB, boss::{BossAssets, boss}, enemy::{EnemyAssets, mushroom}, food::Food, gun::Gun, platform::{Grass, Platform, PlatformAssets, platform}, player::{Player, PlayerAssets, player}
     },
     screens::Screen,
 };
@@ -69,14 +69,14 @@ impl FromWorld for LevelAssets {
 /// A system that spawns the main level.
 pub fn spawn_level(
     mut commands: Commands,
-    level_assets: Res<LevelAssets>,
-    player_assets: Res<PlayerAssets>,
-    platform_assets: Res<PlatformAssets>,
-    enemy_assets: Res<EnemyAssets>,
-    boss_assets: Res<BossAssets>,
-    mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<ColorMaterial>>,
+    level_assets: If<Res<LevelAssets>>,
+    player_assets: If<Res<PlayerAssets>>,
+    platform_assets: If<Res<PlatformAssets>>,
+    enemy_assets: If<Res<EnemyAssets>>,
+    boss_assets: If<Res<BossAssets>>,
+    mut texture_atlas_layouts: If<ResMut<Assets<TextureAtlasLayout>>>,
+    mut meshes: If<ResMut<Assets<Mesh>>>,
+    mut materials: If<ResMut<Assets<ColorMaterial>>>,
 ) {
     commands.spawn((
         Name::new("Level"),
@@ -164,7 +164,7 @@ pub fn spawn_level(
     }
 }
 
-fn barn(level_assets: &Res<LevelAssets>) -> impl Bundle {
+fn barn(level_assets: &If<Res<LevelAssets>>) -> impl Bundle {
     (
         Name::new("Barn"),
         Transform::from_translation((Vec2::new(-11.4, 5.0) * 64.0).extend(1.0))
@@ -187,7 +187,7 @@ fn curse_level_change(
     gun_query: Query<&mut Gun>,
     player_query: Query<&Transform, With<Player>>,
     platform_assets: If<Res<PlatformAssets>>,
-    mut curse_level: ResMut<CurseLevel>,
+    mut curse_level: If<ResMut<CurseLevel>>,
 ) {
     if !curse_level.needs_change {
         return;

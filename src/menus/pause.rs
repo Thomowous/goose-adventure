@@ -22,18 +22,18 @@ fn spawn_pause_menu(mut commands: Commands) {
     ));
 }
 
-fn open_settings_menu(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {
+fn open_settings_menu(_: On<Pointer<Click>>, mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::Settings);
 }
 
-fn close_menu(_: On<Pointer<Click>>, mut next_menu: ResMut<NextState<Menu>>) {
+fn close_menu(_: On<Pointer<Click>>, mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::None);
 }
 
-fn quit_to_title(_: On<Pointer<Click>>, mut next_screen: ResMut<NextState<Screen>>) {
+fn quit_to_title(_: On<Pointer<Click>>, mut next_screen: If<ResMut<NextState<Screen>>>) {
     next_screen.set(Screen::Title);
 }
 
-fn go_back(mut next_menu: ResMut<NextState<Menu>>) {
+fn go_back(mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::None);
 }

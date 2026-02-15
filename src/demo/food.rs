@@ -26,7 +26,7 @@ fn eat(
     input: Res<ButtonInput<KeyCode>>,
     food_query: Query<(&Transform, &Food, Entity)>,
     player_query: Query<(&Transform, &mut Gun, &MovementController), With<Player>>,
-    mut curse_level: ResMut<CurseLevel>,
+    mut curse_level: If<ResMut<CurseLevel>>,
 ) {
     if !input.just_pressed(KeyCode::KeyE) {
         return;

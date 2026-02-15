@@ -81,12 +81,12 @@ fn global_volume_widget() -> impl Bundle {
 const MIN_VOLUME: f32 = 0.0;
 const MAX_VOLUME: f32 = 3.0;
 
-fn lower_global_volume(_: On<Pointer<Click>>, mut global_volume: ResMut<GlobalVolume>) {
+fn lower_global_volume(_: On<Pointer<Click>>, mut global_volume: If<ResMut<GlobalVolume>>) {
     let linear = (global_volume.volume.to_linear() - 0.1).max(MIN_VOLUME);
     global_volume.volume = Volume::Linear(linear);
 }
 
-fn raise_global_volume(_: On<Pointer<Click>>, mut global_volume: ResMut<GlobalVolume>) {
+fn raise_global_volume(_: On<Pointer<Click>>, mut global_volume: If<ResMut<GlobalVolume>>) {
     let linear = (global_volume.volume.to_linear() + 0.1).min(MAX_VOLUME);
     global_volume.volume = Volume::Linear(linear);
 }
@@ -96,7 +96,7 @@ fn raise_global_volume(_: On<Pointer<Click>>, mut global_volume: ResMut<GlobalVo
 struct GlobalVolumeLabel;
 
 fn update_global_volume_label(
-    global_volume: Res<GlobalVolume>,
+    global_volume: If<Res<GlobalVolume>>,
     mut label: Single<&mut Text, With<GlobalVolumeLabel>>,
 ) {
     let percent = 100.0 * global_volume.volume.to_linear();
@@ -105,8 +105,8 @@ fn update_global_volume_label(
 
 fn go_back_on_click(
     _: On<Pointer<Click>>,
-    screen: Res<State<Screen>>,
-    mut next_menu: ResMut<NextState<Menu>>,
+    screen: If<Res<State<Screen>>>,
+    mut next_menu: If<ResMut<NextState<Menu>>>,
 ) {
     next_menu.set(if screen.get() == &Screen::Title {
         Menu::Main
@@ -115,7 +115,7 @@ fn go_back_on_click(
     });
 }
 
-fn go_back(screen: Res<State<Screen>>, mut next_menu: ResMut<NextState<Menu>>) {
+fn go_back(screen: If<Res<State<Screen>>>, mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(if screen.get() == &Screen::Title {
         Menu::Main
     } else {

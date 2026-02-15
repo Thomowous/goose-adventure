@@ -81,8 +81,8 @@ fn move_boss(
     time: Res<Time>,
     mut boss_query: Query<(&mut Transform, &mut Boss), Without<Player>>,
     player_query: Query<&Transform, (With<Player>, Without<Boss>)>,
-    enemy_assets: Res<EnemyAssets>,
-    curse_level: Res<CurseLevel>,
+    enemy_assets: If<Res<EnemyAssets>>,
+    curse_level: If<Res<CurseLevel>>,
 ) {
     if curse_level.value < 8 {
         return;

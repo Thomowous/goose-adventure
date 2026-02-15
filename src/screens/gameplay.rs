@@ -15,11 +15,11 @@ pub(super) fn plugin(app: &mut App) {
     );
 }
 
-fn unpause(mut next_pause: ResMut<NextState<Pause>>) {
+fn unpause(mut next_pause: If<ResMut<NextState<Pause>>>) {
     next_pause.set(Pause(false));
 }
 
-fn pause(mut next_pause: ResMut<NextState<Pause>>) {
+fn pause(mut next_pause: If<ResMut<NextState<Pause>>>) {
     next_pause.set(Pause(true));
 }
 
@@ -37,10 +37,10 @@ fn spawn_pause_overlay(mut commands: Commands) {
     ));
 }
 
-fn open_pause_menu(mut next_menu: ResMut<NextState<Menu>>) {
+fn open_pause_menu(mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::Pause);
 }
 
-fn close_menu(mut next_menu: ResMut<NextState<Menu>>) {
+fn close_menu(mut next_menu: If<ResMut<NextState<Menu>>>) {
     next_menu.set(Menu::None);
 }
